@@ -270,49 +270,31 @@
       background: radial-gradient(circle, rgba(255,79,216,0.25), transparent 65%); pointer-events: none;
     }
     .capsule > * { position: relative; }
-    .capsule p.lead { color: var(--muted); margin: 0 0 18px; font-size: 0.92rem; }
-    .field { margin-bottom: 14px; }
-    label.f { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; }
-    input, textarea {
-      width: 100%; font: inherit; font-size: 16px; color: var(--text); background: rgba(5, 6, 20, 0.65);
-      border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; outline: none; min-height: 48px;
-      transition: border-color .2s, box-shadow .2s; -webkit-appearance: none; appearance: none;
+    .capsule .orb { margin: 4px auto 20px; }
+    .capsule p.lead { color: var(--muted); margin: 0 0 6px; font-size: 0.92rem; text-align: center; }
+    .capsule p.lead b { color: var(--text); }
+    ul.ideas { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+    ul.ideas li {
+      padding: 11px 14px; border-radius: 12px; font-size: 0.92rem;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--line);
     }
-    input:focus, textarea:focus { border-color: var(--cyan); box-shadow: var(--glow); }
-    input[type="date"] { color-scheme: dark; }
-    textarea { min-height: 220px; resize: vertical; line-height: 1.8; }
-    .prompts {
-      display: flex; gap: 8px; overflow-x: auto; margin: 0 -18px 14px; padding: 0 18px 4px; scrollbar-width: none;
-    }
-    .prompts::-webkit-scrollbar { display: none; }
-    .prompts button {
-      flex: none; font: inherit; font-size: 0.85rem; color: var(--text); background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; cursor: pointer; white-space: nowrap;
-    }
-    .prompts button:active { border-color: var(--violet); background: rgba(164,107,255,0.15); }
-    .count { display: block; text-align: right; color: var(--muted); font-size: 0.75rem; margin-top: 6px; }
-    .actions { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 16px; }
+    ul.ideas li::before { content: "✦ "; color: var(--violet); }
+    .actions { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
     .btn {
-      width: 100%; min-height: 52px; font: inherit; font-weight: 700; font-size: 1rem; cursor: pointer; border: 0; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; text-decoration: none;
+      width: 100%; min-height: 54px; font: inherit; font-weight: 700; font-size: 1rem; cursor: pointer; border: 0; border-radius: 14px;
       color: #05060f; background: linear-gradient(100deg, var(--cyan), var(--violet));
       box-shadow: 0 0 30px rgba(62,242,255,0.3);
     }
     .btn:active { transform: scale(0.98); }
-    .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); box-shadow: none; }
-
-    .sealed { display: none; text-align: center; padding: 24px 0 4px; }
-    .sealed.show { display: block; animation: rise .6s ease both; }
+    .link-note { text-align: center; color: var(--muted); font-size: 0.75rem; margin: 10px 0 0; }
     .orb {
-      width: 120px; height: 120px; margin: 0 auto 20px; border-radius: 50%;
+      width: 110px; height: 110px; border-radius: 50%;
       background: radial-gradient(circle at 35% 30%, #fff 0%, var(--cyan) 18%, var(--violet) 55%, #1a0b3a 100%);
       box-shadow: 0 0 60px var(--violet), 0 0 120px rgba(62,242,255,0.4);
       animation: float 4s ease-in-out infinite;
     }
     @keyframes float { 50% { transform: translateY(-10px); } }
-    .orb.launch { animation: launch 1.2s cubic-bezier(.5,0,.3,1) both, float 4s ease-in-out 1.2s infinite; }
-    @keyframes launch { 0% { transform: scale(0.2); opacity: 0; } 45% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
-    .sealed h3 { font-size: 1.3rem; margin: 0 0 6px; }
-    .sealed p { color: var(--muted); margin: 0 0 8px; font-size: 0.92rem; }
 
     footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 48px; }
     footer .mono { color: var(--cyan); }
@@ -496,41 +478,19 @@
     </div>
 
     <section class="capsule reveal">
-      <div id="writeView">
-        <p class="lead">오늘 나눈 이야기를 떠올리며, 몇 년 뒤의 나에게 편지를 남겨요. 편지는 이 기기에만 저장되고, 파일로 내려받을 수 있어요.</p>
-        <div class="field">
-          <label class="f" for="from">보내는 사람</label>
-          <input id="from" type="text" placeholder="지금의 나 (이름)" autocomplete="name">
-        </div>
-        <div class="field">
-          <label class="f" for="openAt">열어볼 날</label>
-          <input id="openAt" type="date">
-        </div>
-        <label class="f">막막하다면 한 줄 시작해 보기 →</label>
-        <div class="prompts">
-          <button type="button">오늘 모임에서 가장 마음에 남은 말은</button>
-          <button type="button">지금 나에게 ‘돔’은</button>
-          <button type="button">그때의 나는 어떤 일을 하고 있을까</button>
-          <button type="button">요즘 내가 가장 많이 들여다보는 화면은</button>
-        </div>
-        <label class="f" for="body">편지</label>
-        <textarea id="body" placeholder="안녕, 미래의 나. 지금 나는…"></textarea>
-        <span class="count mono" id="count">0자</span>
-        <div class="actions">
-          <button class="btn" id="seal" type="button">타임캡슐 봉인하기</button>
-          <button class="btn ghost" id="download" type="button">파일로 저장</button>
-        </div>
+      <div class="orb"></div>
+      <p class="lead">오늘 나눈 이야기를 떠올리며, 몇 년 뒤의 나에게 편지를 남겨요.<br>편지는 <b>futurepost.app</b>에서 써서 미래로 보낼 거예요.</p>
+      <p class="sub-title">쓸 거리가 막막하다면</p>
+      <ul class="ideas">
+        <li>오늘 모임에서 가장 마음에 남은 말은</li>
+        <li>지금 나에게 ‘돔’은</li>
+        <li>그때의 나는 어떤 일을 하고 있을까</li>
+        <li>요즘 내가 가장 많이 들여다보는 화면은</li>
+      </ul>
+      <div class="actions">
+        <a class="btn" href="https://futurepost.app" target="_blank" rel="noopener">✉️ 미래의 나에게 편지 쓰러 가기</a>
       </div>
-
-      <div class="sealed" id="sealedView">
-        <div class="orb"></div>
-        <h3>봉인 완료</h3>
-        <p id="sealedMsg">편지가 미래로 떠났어요.</p>
-        <div class="actions">
-          <button class="btn" id="download2" type="button">편지 파일로 저장</button>
-          <button class="btn ghost" id="reopen" type="button">다시 열어서 고치기</button>
-        </div>
-      </div>
+      <p class="link-note mono">futurepost.app ↗</p>
     </section>
 
     <footer>
@@ -761,81 +721,6 @@
       update();
     })();
 
-    // Letter
-    (function () {
-      const KEY = "book-meeting-future-letter";
-      const $ = id => document.getElementById(id);
-      const from = $("from"), openAt = $("openAt"), body = $("body"), count = $("count");
-      const store = {
-        get() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } },
-        set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} }
-      };
-
-      const d = new Date(); d.setFullYear(d.getFullYear() + 1);
-      openAt.value = d.toISOString().slice(0, 10);
-
-      const saved = store.get();
-      if (saved.from) from.value = saved.from;
-      if (saved.openAt) openAt.value = saved.openAt;
-      if (saved.body) body.value = saved.body;
-
-      function save(extra) { store.set({ ...store.get(), from: from.value, openAt: openAt.value, body: body.value, ...extra }); }
-      function updateCount() { count.textContent = body.value.length + "자"; }
-      [from, openAt, body].forEach(el => el.addEventListener("input", () => { save(); updateCount(); }));
-      updateCount();
-
-      document.querySelectorAll(".prompts button").forEach(b => b.addEventListener("click", () => {
-        const sep = body.value && !body.value.endsWith("\n") ? "\n\n" : "";
-        body.value += sep + b.textContent + " ";
-        body.focus(); body.setSelectionRange(body.value.length, body.value.length);
-        save(); updateCount();
-      }));
-
-      function download() {
-        const name = from.value.trim() || "나";
-        const text =
-`미래의 나에게
-
-열어볼 날: ${openAt.value || "언젠가"}
-쓴 날: ${new Date().toLocaleDateString("ko-KR")}
-보내는 사람: ${name}
-이번 달 주제: 미래 — 앞으로의 세상과 나는 어떻게 될까요?
-
-────────────────────
-
-${body.value}
-`;
-        const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = `미래의나에게_${name}_${openAt.value || ""}.txt`;
-        document.body.appendChild(a); a.click(); a.remove();
-        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-      }
-
-      function showSealed() {
-        $("writeView").style.display = "none";
-        $("sealedView").classList.add("show");
-        const when = openAt.value ? new Date(openAt.value + "T00:00:00").toLocaleDateString("ko-KR", { year: "numeric", month: "long", day: "numeric" }) : "언젠가";
-        $("sealedMsg").textContent = `${when}의 나에게 편지가 떠났어요. 잊지 않게 파일로도 저장해 두세요.`;
-      }
-
-      $("seal").addEventListener("click", () => {
-        if (!body.value.trim()) { body.focus(); body.placeholder = "한 줄이라도 적어 주세요 :)"; return; }
-        save({ sealed: true }); showSealed(); buzz([30, 60, 30]);
-        const orb = document.querySelector(".orb");
-        orb.classList.remove("launch"); void orb.offsetWidth; orb.classList.add("launch");
-        $("letter").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
-      });
-      $("download").addEventListener("click", download);
-      $("download2").addEventListener("click", download);
-      $("reopen").addEventListener("click", () => {
-        save({ sealed: false });
-        $("sealedView").classList.remove("show");
-        $("writeView").style.display = "";
-      });
-      if (saved.sealed && saved.body) showSealed();
-    })();
   </script>
 </body>
 </html>
