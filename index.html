@@ -222,6 +222,91 @@
     .sealed p { color: var(--muted); margin: 0 0 20px; }
     .sealed .actions { justify-content: center; }
 
+    /* Locked questions */
+    .ask[data-lock] { cursor: pointer; position: relative; transition: transform .2s, box-shadow .2s; user-select: none; }
+    .ask[data-lock]:hover { transform: translateY(-2px); box-shadow: 0 0 30px color-mix(in srgb, var(--accent, var(--cyan)) 30%, transparent); }
+    .ask[data-lock]:focus-visible { outline: 2px solid var(--accent, var(--cyan)); outline-offset: 3px; }
+    .ask .q-text { display: block; }
+    .ask.locked .q-text { color: color-mix(in srgb, var(--accent, var(--cyan)) 70%, white); font-family: "JetBrains Mono", monospace; letter-spacing: 0.05em; opacity: 0.55; filter: blur(0.6px); }
+    .ask .hint {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; font-family: "JetBrains Mono", monospace;
+      font-size: 0.78rem; color: var(--accent, var(--cyan)); letter-spacing: 0.1em;
+    }
+    .ask .hint::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px currentColor; animation: pulse 1.4s ease-in-out infinite; }
+    .ask.open { cursor: default; }
+    .ask.open .hint { display: none; }
+    .ask.open:hover { transform: none; }
+    .ask .scan {
+      position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0;
+      background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent, var(--cyan)) 35%, transparent), transparent);
+      background-size: 100% 40%; background-repeat: no-repeat;
+    }
+    .ask.decoding .scan { opacity: 1; animation: scan .9s linear; }
+    @keyframes scan { from { background-position: 0 -40%; } to { background-position: 0 140%; } }
+
+    /* Hidden until question opens */
+    .after-open { display: none; }
+    .after-open.show { display: block; animation: rise .6s ease both; }
+
+    /* Branch choice */
+    .choice { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .choice button {
+      font: inherit; color: var(--text); cursor: pointer; padding: 16px; border-radius: 14px;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--line); text-align: left;
+      transition: border-color .2s, background .2s, opacity .2s, transform .2s;
+    }
+    .choice button b { display: block; font-size: 1.1rem; }
+    .choice button small { color: var(--muted); }
+    .choice button:hover { border-color: var(--accent, var(--cyan)); transform: translateY(-2px); }
+    .choice button.on { border-color: var(--accent, var(--cyan)); background: color-mix(in srgb, var(--accent, var(--cyan)) 14%, transparent); box-shadow: var(--glow); }
+    .choice.picked button:not(.on) { opacity: 0.45; }
+    .branch { display: none; margin-bottom: 18px; border-style: solid; border-color: color-mix(in srgb, var(--accent, var(--cyan)) 40%, transparent); }
+    .branch.show { display: block; animation: rise .5s ease both; }
+
+    /* Sequential questions */
+    ul.qs li.hidden-q { display: none; }
+    ul.qs li.new { animation: rise .5s ease both; }
+    .next-q {
+      font: inherit; font-size: 0.88rem; cursor: pointer; color: var(--accent, var(--cyan));
+      background: transparent; border: 1px dashed color-mix(in srgb, var(--accent, var(--cyan)) 50%, transparent);
+      border-radius: 999px; padding: 6px 14px; margin-top: 4px;
+    }
+    .next-q:hover { background: color-mix(in srgb, var(--accent, var(--cyan)) 10%, transparent); }
+
+    /* Like (surveillance) */
+    .like-box { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 0 0 18px; }
+    .like {
+      font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: 999px; color: var(--text);
+      background: rgba(255,79,216,0.08); border: 1px solid rgba(255,79,216,0.4); transition: transform .1s;
+    }
+    .like:active { transform: scale(0.94); }
+    .like .heart { color: var(--pink); font-size: 1.1rem; }
+    .like.pop .heart { animation: pop .4s ease; }
+    @keyframes pop { 40% { transform: scale(1.6); } }
+    .log {
+      font-family: "JetBrains Mono", monospace; font-size: 0.78rem; color: var(--pink);
+      min-height: 1.4em; flex: 1; min-width: 200px;
+    }
+    .log span { display: block; animation: rise .4s ease both; }
+
+    /* Cursor glow */
+    #glow {
+      position: fixed; width: 360px; height: 360px; left: 0; top: 0; z-index: 0; pointer-events: none; border-radius: 50%;
+      background: radial-gradient(circle, rgba(62,242,255,0.10), transparent 65%);
+      transform: translate(-50%, -50%); opacity: 0; transition: opacity .4s;
+    }
+    .book.reveal.in { transition: opacity .8s ease, transform .25s ease; }
+
+    /* Letter launch */
+    .orb.launch { animation: launch 1.4s cubic-bezier(.5,0,.3,1) both; }
+    @keyframes launch {
+      0% { transform: scale(0.2); opacity: 0; }
+      40% { transform: scale(1.1); opacity: 1; }
+      60% { transform: scale(1); }
+      100% { transform: scale(1); }
+    }
+
     footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 80px; }
     footer .mono { color: var(--cyan); }
 
@@ -231,7 +316,7 @@
     @media (max-width: 720px) {
       .book { grid-template-columns: 1fr; gap: 24px; padding: 22px 18px; }
       .cover-wrap { width: 160px; margin: 0 auto; }
-      .branches, .row { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
       .capsule { padding: 24px 18px; }
       .count { margin-left: 0; width: 100%; }
     }
@@ -244,6 +329,7 @@
 <body>
   <canvas id="stars"></canvas>
   <div class="grid-floor"></div>
+  <div id="glow"></div>
 
   <main>
     <section class="hero">
@@ -285,30 +371,34 @@
         <h3>지구 끝의 온실</h3>
         <p class="author">김초엽</p>
 
-        <div class="ask">
+        <div class="ask" data-lock>
           <span class="label">Q. 발제</span>
-          “내 안전이 돔 밖 누군가의 희생 위에 서 있다는 걸 알게 된다면, 나는 모른 척 안에 남을까, 아니면 지수처럼 위험한 바깥으로 나갈까?”
+          <span class="q-text">“내 안전이 돔 밖 누군가의 희생 위에 서 있다는 걸 알게 된다면, 나는 모른 척 안에 남을까, 아니면 지수처럼 위험한 바깥으로 나갈까?”</span>
         </div>
 
-        <p class="sub-title">답에 따라 던질 꼬리 질문</p>
-        <div class="branches">
-          <div class="branch">
-            <span class="who">→ 남는다</span>
+        <div class="after-open">
+          <p class="sub-title">당신의 선택은?</p>
+          <div class="choice">
+            <button type="button" data-branch="stay"><b>🏠 안에 남는다</b><small>돔 안의 안전</small></button>
+            <button type="button" data-branch="go"><b>🌱 바깥으로 나간다</b><small>지수처럼</small></button>
+          </div>
+          <div class="branch" data-for="stay">
+            <span class="who">꼬리 질문 → 남는다</span>
             “안에 남는다면, 그 안에서 할 수 있는 일은 뭘까?”
             <em>남되 바꾸는 제3의 선택</em>
           </div>
-          <div class="branch">
-            <span class="who">→ 나간다</span>
+          <div class="branch" data-for="go">
+            <span class="who">꼬리 질문 → 나간다</span>
             “어느 순간이 되면 나가야겠다고 결심할 것 같아?”
             <em>나만의 한계선</em>
           </div>
-        </div>
 
-        <p class="sub-title">경험으로 끌어오는 질문</p>
-        <ul class="qs">
-          <li>“편하자고 눈감았던 적, 반대로 손해 보고도 아닌 건 아니라고 했던 적 있어?”</li>
-          <li>“지금 내 삶에서 ‘돔’이라고 느껴지는 건 뭐야?” <small>(직장, 동네, 인간관계 등)</small></li>
-        </ul>
+          <p class="sub-title">경험으로 끌어오는 질문</p>
+          <ul class="qs" data-seq>
+            <li>“편하자고 눈감았던 적, 반대로 손해 보고도 아닌 건 아니라고 했던 적 있어?”</li>
+            <li>“지금 내 삶에서 ‘돔’이라고 느껴지는 건 뭐야?” <small>(직장, 동네, 인간관계 등)</small></li>
+          </ul>
+        </div>
       </div>
     </article>
 
@@ -328,10 +418,9 @@
 
         <blockquote>“선택의 권리, 선택할 수 있는 능력이야말로 진정한 힘이다.”</blockquote>
 
-        <div class="ask">
+        <div class="ask" data-lock>
           <span class="label">Q. 발제</span>
-          시대의 흐름이 바뀜에 따라 일의 형태도 다양하게 변화하고 있습니다.
-          제약 없이 원하는 일을 선택할 수 있다면, 지금의 직장이나 직업을 넘어 어떤 일을 하며 살고 싶나요?
+          <span class="q-text">시대의 흐름이 바뀜에 따라 일의 형태도 다양하게 변화하고 있습니다. 제약 없이 원하는 일을 선택할 수 있다면, 지금의 직장이나 직업을 넘어 어떤 일을 하며 살고 싶나요?</span>
         </div>
       </div>
     </article>
@@ -358,9 +447,14 @@
           정보체제에서 자유롭기는 행위하기가 아니라 클릭하기, 좋아요 누르기, 게시물 올리기를 뜻한다.
           따라서 정보체제는 거의 저항에 직면하지 않는다.”
         </blockquote>
-        <div class="ask">
+        <div class="like-box">
+          <button class="like" type="button" id="like"><span class="heart">♥</span> 좋아요 <span class="mono" id="likeN">0</span></button>
+          <div class="log" id="log"></div>
+        </div>
+
+        <div class="ask" data-lock>
           <span class="label">Q1. 발제</span>
-          디지털 세계에서 우리는 정말 자유롭나요?
+          <span class="q-text">디지털 세계에서 우리는 정말 자유롭나요?</span>
         </div>
 
         <blockquote>
@@ -483,6 +577,124 @@
     }, { threshold: 0.12 });
     document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
+    const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Locked questions: tap to decode
+    (function () {
+      const GLYPHS = "▓▒░█<>/\\|=+*#@$%01ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ";
+
+      document.querySelectorAll(".ask[data-lock]").forEach(ask => {
+        const q = ask.querySelector(".q-text");
+        const real = q.textContent.trim();
+        const scramble = () => real.replace(/\S/g, () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)]);
+        q.textContent = scramble();
+        ask.classList.add("locked");
+        ask.setAttribute("role", "button");
+        ask.setAttribute("tabindex", "0");
+        ask.setAttribute("aria-label", "발제 질문 열기");
+        const hint = document.createElement("span");
+        hint.className = "hint";
+        hint.textContent = "TAP TO DECODE · 탭해서 발제 열기";
+        ask.appendChild(hint);
+        const scan = document.createElement("span");
+        scan.className = "scan";
+        ask.appendChild(scan);
+
+        let idle = setInterval(() => { if (ask.classList.contains("locked")) q.textContent = scramble(); }, 900);
+
+        function open() {
+          if (!ask.classList.contains("locked")) return;
+          clearInterval(idle);
+          ask.classList.remove("locked");
+          ask.classList.add("decoding");
+          ask.removeAttribute("role"); ask.removeAttribute("tabindex"); ask.removeAttribute("aria-label");
+          const after = ask.parentElement.querySelector(".after-open");
+          const finish = () => {
+            q.textContent = real;
+            ask.classList.remove("decoding");
+            ask.classList.add("open");
+            if (after) after.classList.add("show");
+          };
+          if (REDUCED) return finish();
+          const total = 900, start = performance.now();
+          (function frame(now) {
+            const p = Math.min(1, (now - start) / total);
+            const n = Math.floor(real.length * p);
+            q.textContent = real.slice(0, n) + real.slice(n).replace(/\S/g, () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)]);
+            p < 1 ? requestAnimationFrame(frame) : finish();
+          })(start);
+        }
+        ask.addEventListener("click", open);
+        ask.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+      });
+    })();
+
+    // Branch choice
+    document.querySelectorAll(".choice").forEach(choice => {
+      const scope = choice.parentElement;
+      choice.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+        choice.classList.add("picked");
+        choice.querySelectorAll("button").forEach(b => b.classList.toggle("on", b === btn));
+        scope.querySelectorAll(".branch").forEach(br => br.classList.toggle("show", br.dataset.for === btn.dataset.branch));
+      }));
+    });
+
+    // Sequential questions
+    document.querySelectorAll("ul.qs[data-seq]").forEach(ul => {
+      const items = [...ul.children];
+      items.slice(1).forEach(li => li.classList.add("hidden-q"));
+      if (items.length < 2) return;
+      const btn = document.createElement("button");
+      btn.type = "button"; btn.className = "next-q"; btn.textContent = "+ 다음 질문 열기";
+      ul.after(btn);
+      btn.addEventListener("click", () => {
+        const next = ul.querySelector(".hidden-q");
+        if (next) { next.classList.remove("hidden-q"); next.classList.add("new"); }
+        if (!ul.querySelector(".hidden-q")) btn.remove();
+      });
+    });
+
+    // Like = surveillance log
+    (function () {
+      const btn = document.getElementById("like"), nEl = document.getElementById("likeN"), log = document.getElementById("log");
+      if (!btn) return;
+      const lines = [
+        "방금 그 클릭도 기록되었습니다.",
+        "관심사 프로필이 업데이트되었습니다.",
+        "당신이 좋아할 만한 콘텐츠를 준비 중입니다.",
+        "체류 시간과 클릭 패턴이 분석되었습니다.",
+        "자유롭다고 느끼셨나요? 그것도 기록됩니다.",
+        "> 손가락 끝 자유 :: 정상 작동 중"
+      ];
+      let n = 0;
+      btn.addEventListener("click", () => {
+        n++; nEl.textContent = n;
+        btn.classList.remove("pop"); void btn.offsetWidth; btn.classList.add("pop");
+        const t = new Date().toTimeString().slice(0, 8);
+        log.innerHTML = "";
+        const s = document.createElement("span");
+        s.textContent = `[${t}] ${lines[(n - 1) % lines.length]}`;
+        log.appendChild(s);
+      });
+    })();
+
+    // Card tilt + cursor glow
+    if (!REDUCED && matchMedia("(hover: hover)").matches) {
+      const glow = document.getElementById("glow");
+      addEventListener("pointermove", e => {
+        glow.style.opacity = 1;
+        glow.style.left = e.clientX + "px"; glow.style.top = e.clientY + "px";
+      });
+      document.querySelectorAll(".book").forEach(card => {
+        card.addEventListener("pointermove", e => {
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transform = `perspective(1200px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
+        });
+        card.addEventListener("pointerleave", () => { card.style.transform = ""; });
+      });
+    }
+
     // Letter
     (function () {
       const KEY = "book-meeting-future-letter";
@@ -545,6 +757,9 @@ ${body.value}
       $("seal").addEventListener("click", () => {
         if (!body.value.trim()) { body.focus(); body.placeholder = "한 줄이라도 적어 주세요 :)"; return; }
         save({ sealed: true }); showSealed();
+        const orb = document.querySelector(".orb");
+        orb.classList.remove("launch"); void orb.offsetWidth; orb.classList.add("launch");
+        $("sealedView").scrollIntoView({ behavior: "smooth", block: "center" });
       });
       $("download").addEventListener("click", download);
       $("download2").addEventListener("click", download);
