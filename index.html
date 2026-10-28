@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>책 모임</title>
+  <style>
+    :root {
+      --bg: #faf7f2;
+      --card: #ffffff;
+      --text: #2b2622;
+      --muted: #7a7068;
+      --accent: #b5562f;
+      --line: #e8e1d8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1917;
+        --card: #26221f;
+        --text: #f2ede7;
+        --muted: #a89f96;
+        --accent: #e0855c;
+        --line: #3a342f;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      line-height: 1.7;
+    }
+    main { max-width: 720px; margin: 0 auto; padding: 48px 16px 64px; }
+    header { margin-bottom: 40px; }
+    h1 { font-size: 2rem; margin: 0 0 8px; }
+    .lead { color: var(--muted); margin: 0; }
+    h2 { font-size: 1.15rem; margin: 0 0 12px; color: var(--accent); }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .book { display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; }
+    .book strong { font-size: 1.1rem; }
+    .book span { color: var(--muted); }
+    dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+    dt { color: var(--muted); }
+    dd { margin: 0; }
+    ul { margin: 0; padding-left: 20px; }
+    footer { color: var(--muted); font-size: 0.85rem; text-align: center; margin-top: 32px; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>📚 책 모임</h1>
+      <p class="lead">한 달에 한 권, 같이 읽고 이야기 나누는 모임입니다.</p>
+    </header>
+
+    <section>
+      <h2>이번 달의 책</h2>
+      <div class="book">
+        <strong>책 제목</strong>
+        <span>저자 이름</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>다음 모임</h2>
+      <dl>
+        <dt>날짜</dt><dd>2026년 11월 ○일 (토)</dd>
+        <dt>시간</dt><dd>오후 2시</dd>
+        <dt>장소</dt><dd>장소 입력</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>지난 책들</h2>
+      <ul>
+        <li>지난 책 1</li>
+        <li>지난 책 2</li>
+      </ul>
+    </section>
+
+    <footer>책 모임</footer>
+  </main>
+</body>
+</html>
