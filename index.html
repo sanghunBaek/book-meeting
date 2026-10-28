@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#05060f">
   <title>책 모임 · 미래</title>
   <meta name="description" content="이번 달 독서모임 주제 '미래' — 앞으로의 세상과 나는 어떻게 될까요?">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,8 +12,7 @@
   <style>
     :root {
       --bg: #05060f;
-      --bg-2: #0b0e22;
-      --panel: rgba(18, 22, 48, 0.62);
+      --panel: rgba(18, 22, 48, 0.72);
       --line: rgba(120, 160, 255, 0.18);
       --text: #e8ecff;
       --muted: #8f97c4;
@@ -20,308 +20,326 @@
       --violet: #a46bff;
       --pink: #ff4fd8;
       --glow: 0 0 24px rgba(62, 242, 255, 0.35);
+      --tab-h: 64px;
+      --safe-b: env(safe-area-inset-bottom, 0px);
     }
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background: radial-gradient(1200px 800px at 80% -10%, #1a1050 0%, transparent 60%),
-                  radial-gradient(900px 700px at -10% 30%, #062a3a 0%, transparent 60%),
+      background: radial-gradient(700px 600px at 90% -10%, #1a1050 0%, transparent 60%),
+                  radial-gradient(600px 600px at -20% 40%, #062a3a 0%, transparent 60%),
                   var(--bg);
       color: var(--text);
       font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.75;
+      font-size: 15px;
+      line-height: 1.7;
       overflow-x: hidden;
+      word-break: keep-all;
     }
     #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
     .grid-floor {
-      position: fixed; left: -50%; right: -50%; bottom: -10vh; height: 55vh; z-index: 0; pointer-events: none;
+      position: fixed; left: -60%; right: -60%; bottom: -8vh; height: 45vh; z-index: 0; pointer-events: none;
       background-image:
         linear-gradient(rgba(164, 107, 255, 0.35) 1px, transparent 1px),
         linear-gradient(90deg, rgba(164, 107, 255, 0.35) 1px, transparent 1px);
-      background-size: 60px 60px;
-      transform: perspective(400px) rotateX(65deg);
-      mask-image: linear-gradient(to top, rgba(0,0,0,0.6), transparent 85%);
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.6), transparent 85%);
-      animation: floor 6s linear infinite;
+      background-size: 44px 44px;
+      transform: perspective(300px) rotateX(65deg);
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.5), transparent 85%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.5), transparent 85%);
+      animation: floor 5s linear infinite;
     }
-    @keyframes floor { to { background-position: 0 60px, 0 0; } }
+    @keyframes floor { to { background-position: 0 44px, 0 0; } }
 
-    main { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; padding: 0 16px 96px; }
+    main {
+      position: relative; z-index: 1; max-width: 480px; margin: 0 auto;
+      padding: 0 16px calc(var(--tab-h) + var(--safe-b) + 40px);
+    }
     .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
     .label {
-      font-family: "JetBrains Mono", monospace; font-size: 0.78rem; letter-spacing: 0.2em;
+      font-family: "JetBrains Mono", monospace; font-size: 0.72rem; letter-spacing: 0.18em;
       color: var(--cyan); text-transform: uppercase;
     }
 
     /* Hero */
-    .hero { min-height: 92vh; display: flex; flex-direction: column; justify-content: center; padding: 64px 0 32px; }
+    .hero {
+      min-height: calc(100svh - var(--tab-h) - var(--safe-b));
+      display: flex; flex-direction: column; justify-content: center; padding: 48px 0 24px;
+    }
     .hero h1 {
-      font-family: "Orbitron", "Noto Sans KR", sans-serif; font-weight: 900;
-      font-size: clamp(3.2rem, 14vw, 8rem); line-height: 1; margin: 16px 0 8px;
+      font-family: "Orbitron", sans-serif; font-weight: 900;
+      font-size: clamp(3.4rem, 19vw, 5.6rem); line-height: 1; margin: 14px 0 6px;
       background: linear-gradient(100deg, var(--cyan), var(--violet) 50%, var(--pink));
       -webkit-background-clip: text; background-clip: text; color: transparent;
-      filter: drop-shadow(0 0 30px rgba(164, 107, 255, 0.45));
+      filter: drop-shadow(0 0 24px rgba(164, 107, 255, 0.45));
     }
     .hero h1 small {
-      display: block; font-size: 0.28em; letter-spacing: 0.5em; margin-top: 12px;
-      font-family: "Orbitron", sans-serif; font-weight: 500;
+      display: block; font-size: 0.26em; letter-spacing: 0.6em; margin-top: 10px;
+      font-family: "Noto Sans KR", sans-serif; font-weight: 500;
     }
-    .hero .q { font-size: clamp(1.25rem, 3.6vw, 1.8rem); font-weight: 500; margin: 24px 0 12px; }
-    .hero .desc { color: var(--muted); max-width: 620px; margin: 0; }
+    .hero .q { font-size: 1.3rem; font-weight: 700; line-height: 1.5; margin: 22px 0 10px; min-height: 2.9em; }
+    .hero .desc { color: var(--muted); margin: 0; }
     .typed::after { content: "▍"; color: var(--cyan); animation: blink 1s steps(1) infinite; margin-left: 2px; }
     @keyframes blink { 50% { opacity: 0; } }
 
     .deadline {
-      margin-top: 32px; display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap;
-      padding: 14px 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); align-self: flex-start;
+      margin-top: 24px; display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     }
-    .deadline .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--pink); box-shadow: 0 0 12px var(--pink); animation: pulse 1.6s ease-in-out infinite; }
+    .deadline .dot { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--pink); box-shadow: 0 0 12px var(--pink); animation: pulse 1.6s ease-in-out infinite; }
     @keyframes pulse { 50% { transform: scale(1.5); opacity: 0.5; } }
-
-    nav.timeline {
-      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 40px;
+    .scroll-cue {
+      margin-top: 36px; display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--muted); font-size: 0.8rem; text-decoration: none;
     }
-    nav.timeline a {
-      color: var(--text); text-decoration: none; font-size: 0.9rem;
-      padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,0.03);
-      transition: border-color .2s, box-shadow .2s;
-    }
-    nav.timeline a:hover { border-color: var(--cyan); box-shadow: var(--glow); }
-    nav.timeline a span { color: var(--cyan); margin-right: 6px; }
+    .scroll-cue i { width: 22px; height: 34px; border: 1.5px solid var(--muted); border-radius: 12px; position: relative; }
+    .scroll-cue i::after { content: ""; position: absolute; left: 50%; top: 6px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--cyan); animation: cue 1.6s ease-in-out infinite; }
+    @keyframes cue { 60% { transform: translateY(10px); opacity: 0; } }
 
     /* Section headers */
-    .sec-head { margin: 96px 0 28px; }
-    .sec-head h2 {
-      font-family: "Orbitron", "Noto Sans KR", sans-serif; font-weight: 700;
-      font-size: clamp(1.6rem, 5vw, 2.4rem); margin: 6px 0 0;
-    }
+    .sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin: 56px 0 16px; scroll-margin-top: 16px; }
+    .sec-head h2 { font-family: "Noto Sans KR", sans-serif; font-weight: 700; font-size: 1.5rem; margin: 4px 0 0; line-height: 1.3; }
+    .counter { font-family: "Orbitron", sans-serif; font-size: 0.95rem; color: var(--muted); white-space: nowrap; }
+    .counter b { color: var(--cyan); font-size: 1.3rem; }
 
-    /* Book cards */
+    /* Carousel */
+    .track {
+      display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory;
+      margin: 0 -16px; padding: 4px 16px 8px; scroll-padding: 0 16px;
+      scrollbar-width: none; overscroll-behavior-x: contain; align-items: flex-start;
+    }
+    .track::-webkit-scrollbar { display: none; }
+    .dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+    .dots button {
+      width: 28px; height: 28px; padding: 0; border: 0; background: transparent; cursor: pointer;
+      display: grid; place-items: center;
+    }
+    .dots button::before {
+      content: ""; width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.25); transition: width .3s, background .3s;
+    }
+    .dots button.on::before { width: 24px; background: var(--cyan); box-shadow: var(--glow); }
+    .swipe-hint { text-align: center; color: var(--muted); font-size: 0.78rem; margin: 6px 0 0; }
+
+    /* Book card */
     .book {
-      position: relative; display: grid; grid-template-columns: 200px 1fr; gap: 32px;
-      padding: 28px; margin-bottom: 28px; border-radius: 20px;
+      position: relative; flex: 0 0 calc(100% - 28px); scroll-snap-align: start;
+      padding: 20px 18px 22px; border-radius: 22px;
       background: var(--panel); border: 1px solid var(--line);
       backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       overflow: hidden;
     }
     .book::before {
-      content: ""; position: absolute; inset: 0; border-radius: 20px; padding: 1px; pointer-events: none;
-      background: linear-gradient(135deg, var(--accent, var(--cyan)), transparent 40%, transparent 60%, var(--violet));
+      content: ""; position: absolute; inset: 0; border-radius: 22px; padding: 1px; pointer-events: none;
+      background: linear-gradient(135deg, var(--accent), transparent 40%, transparent 60%, var(--violet));
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0.8;
+      -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0.85;
     }
-    .book .idx {
-      position: absolute; top: 14px; right: 22px; font-family: "Orbitron", sans-serif; font-weight: 900;
-      font-size: 4.5rem; line-height: 1; color: rgba(255,255,255,0.05); pointer-events: none;
+    .book::after {
+      content: ""; position: absolute; width: 260px; height: 260px; right: -110px; top: -120px; border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 30%, transparent), transparent 65%); pointer-events: none;
     }
-    .cover-wrap { perspective: 900px; }
+    .book-top { position: relative; z-index: 1; display: flex; gap: 16px; align-items: flex-end; margin-bottom: 18px; }
     .cover {
-      position: relative; width: 100%; aspect-ratio: 2 / 3; border-radius: 6px 10px 10px 6px; overflow: hidden;
-      transform: rotateY(-14deg) rotateX(4deg); transform-style: preserve-3d;
-      box-shadow: 18px 22px 40px rgba(0,0,0,0.55), 0 0 40px color-mix(in srgb, var(--accent, var(--cyan)) 30%, transparent);
-      transition: transform .5s ease;
+      position: relative; flex: none; width: 92px; aspect-ratio: 2 / 3; border-radius: 4px 8px 8px 4px; overflow: hidden;
+      box-shadow: 10px 12px 24px rgba(0,0,0,0.55), 0 0 28px color-mix(in srgb, var(--accent) 35%, transparent);
       background: linear-gradient(160deg, #1b2050, #0a0c20);
+      transform: rotate(-3deg);
     }
-    .book:hover .cover { transform: rotateY(0) rotateX(0) translateY(-4px); }
     .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .cover::after {
       content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(90deg, rgba(0,0,0,0.35) 0, rgba(255,255,255,0.12) 3%, transparent 8%, transparent 85%, rgba(255,255,255,0.08));
+      background: linear-gradient(90deg, rgba(0,0,0,0.35) 0, rgba(255,255,255,0.14) 4%, transparent 10%);
     }
     .cover .fallback {
       position: absolute; inset: 0; display: none; flex-direction: column; justify-content: space-between;
-      padding: 18px 16px; text-align: left;
-      background: radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--accent, var(--cyan)) 45%, transparent), transparent 60%),
+      padding: 10px 9px;
+      background: radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--accent) 50%, transparent), transparent 65%),
                   linear-gradient(160deg, #1b2050, #070818);
     }
     .cover.no-img img { display: none; }
     .cover.no-img .fallback { display: flex; }
-    .fallback b { font-size: 1.25rem; line-height: 1.35; }
-    .fallback i { font-style: normal; color: var(--muted); font-size: 0.85rem; }
-
-    .book-body h3 { font-size: clamp(1.4rem, 3.6vw, 1.9rem); margin: 4px 0 2px; }
-    .book-body .author { color: var(--muted); margin: 0 0 20px; font-size: 0.95rem; }
+    .fallback b { font-size: 0.82rem; line-height: 1.35; }
+    .fallback i { font-style: normal; color: var(--muted); font-size: 0.62rem; }
+    .book-meta { min-width: 0; }
+    .book-meta .idx { font-family: "Orbitron", sans-serif; font-weight: 900; font-size: 0.8rem; color: var(--accent); }
+    .book-meta .label { color: var(--accent); display: block; margin-top: 2px; }
+    .book-meta h3 { font-size: 1.3rem; line-height: 1.35; margin: 4px 0 2px; }
+    .book-meta .author { color: var(--muted); margin: 0; font-size: 0.88rem; }
+    .book-body { position: relative; z-index: 1; }
 
     blockquote {
-      margin: 0 0 18px; padding: 16px 18px 16px 20px; border-left: 2px solid var(--accent, var(--cyan));
-      background: rgba(255,255,255,0.03); border-radius: 0 12px 12px 0; color: #cfd5f5; font-size: 0.97rem;
+      position: relative; margin: 0 0 14px; padding: 14px 14px 14px 16px; border-left: 2px solid var(--accent);
+      background: rgba(255,255,255,0.035); border-radius: 0 12px 12px 0; color: #cfd5f5; font-size: 0.92rem;
     }
+    blockquote.fold { max-height: 9.6em; overflow: hidden; }
+    blockquote.fold::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4em;
+      background: linear-gradient(transparent, #11142e);
+    }
+    blockquote.fold.unfold { max-height: none; }
+    blockquote.fold.unfold::after { display: none; }
+    .more {
+      display: block; width: 100%; margin: -8px 0 14px; padding: 10px; font: inherit; font-size: 0.85rem; cursor: pointer;
+      color: var(--accent); background: transparent; border: 0;
+    }
+
     .ask {
-      margin: 0 0 18px; padding: 18px 20px; border-radius: 14px;
-      background: linear-gradient(135deg, color-mix(in srgb, var(--accent, var(--cyan)) 16%, transparent), rgba(164,107,255,0.08));
-      border: 1px solid color-mix(in srgb, var(--accent, var(--cyan)) 35%, transparent);
-      font-size: 1.08rem; font-weight: 500;
+      position: relative; margin: 0 0 14px; padding: 16px; border-radius: 14px;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 16%, transparent), rgba(164,107,255,0.08));
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      font-size: 1.02rem; font-weight: 500; line-height: 1.65; overflow: hidden;
     }
-    .ask .label { display: block; margin-bottom: 6px; color: var(--accent, var(--cyan)); }
-
-    .branches { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
-    .branch {
-      padding: 14px 16px; border-radius: 12px; border: 1px dashed var(--line); background: rgba(255,255,255,0.02);
-      font-size: 0.95rem;
-    }
-    .branch .who { display: block; font-family: "JetBrains Mono", monospace; font-size: 0.78rem; color: var(--accent, var(--cyan)); margin-bottom: 4px; }
-    .branch em { display: block; font-style: normal; color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
-    .sub-title { font-family: "JetBrains Mono", monospace; font-size: 0.78rem; letter-spacing: 0.15em; color: var(--muted); margin: 0 0 10px; }
-    ul.qs { margin: 0; padding: 0; list-style: none; }
-    ul.qs li { position: relative; padding-left: 22px; margin-bottom: 8px; }
-    ul.qs li::before { content: "›"; position: absolute; left: 4px; color: var(--accent, var(--cyan)); font-weight: 700; }
-    ul.qs li small { color: var(--muted); }
-
-    /* Letter */
-    .capsule {
-      position: relative; padding: 32px 28px; border-radius: 24px; background: var(--panel);
-      border: 1px solid var(--line); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      overflow: hidden;
-    }
-    .capsule::before {
-      content: ""; position: absolute; width: 520px; height: 520px; right: -200px; top: -240px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,79,216,0.25), transparent 65%); pointer-events: none;
-    }
-    .capsule p.lead { color: var(--muted); margin: 0 0 24px; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-    label.f { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; }
-    input, textarea {
-      width: 100%; font: inherit; color: var(--text); background: rgba(5, 6, 20, 0.6);
-      border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; outline: none;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    input:focus, textarea:focus { border-color: var(--cyan); box-shadow: var(--glow); }
-    input[type="date"] { color-scheme: dark; }
-    textarea { min-height: 240px; resize: vertical; line-height: 1.8; }
-    .prompts { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
-    .prompts button {
-      font: inherit; font-size: 0.85rem; color: var(--text); background: rgba(255,255,255,0.04);
-      border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer;
-    }
-    .prompts button:hover { border-color: var(--violet); }
-    .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 18px; }
-    .btn {
-      font: inherit; font-weight: 700; cursor: pointer; border: 0; border-radius: 14px; padding: 14px 22px;
-      color: #05060f; background: linear-gradient(100deg, var(--cyan), var(--violet));
-      box-shadow: 0 0 30px rgba(62,242,255,0.35); transition: transform .15s, box-shadow .2s;
-    }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 0 44px rgba(164,107,255,0.55); }
-    .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); box-shadow: none; }
-    .count { margin-left: auto; color: var(--muted); font-size: 0.85rem; }
-
-    .sealed {
-      display: none; text-align: center; padding: 40px 12px 16px;
-    }
-    .sealed.show { display: block; animation: rise .8s ease both; }
-    @keyframes rise { from { opacity: 0; transform: translateY(20px) scale(0.96); } }
-    .orb {
-      width: 140px; height: 140px; margin: 0 auto 24px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #fff 0%, var(--cyan) 18%, var(--violet) 55%, #1a0b3a 100%);
-      box-shadow: 0 0 60px var(--violet), 0 0 120px rgba(62,242,255,0.4);
-      animation: float 4s ease-in-out infinite;
-    }
-    @keyframes float { 50% { transform: translateY(-10px); } }
-    .sealed h3 { font-family: "Orbitron", "Noto Sans KR", sans-serif; margin: 0 0 8px; }
-    .sealed p { color: var(--muted); margin: 0 0 20px; }
-    .sealed .actions { justify-content: center; }
-
-    /* Locked questions */
-    .ask[data-lock] { cursor: pointer; position: relative; transition: transform .2s, box-shadow .2s; user-select: none; }
-    .ask[data-lock]:hover { transform: translateY(-2px); box-shadow: 0 0 30px color-mix(in srgb, var(--accent, var(--cyan)) 30%, transparent); }
-    .ask[data-lock]:focus-visible { outline: 2px solid var(--accent, var(--cyan)); outline-offset: 3px; }
+    .ask .label { display: block; margin-bottom: 6px; color: var(--accent); }
     .ask .q-text { display: block; }
-    .ask.locked .q-text { color: color-mix(in srgb, var(--accent, var(--cyan)) 70%, white); font-family: "JetBrains Mono", monospace; letter-spacing: 0.05em; opacity: 0.55; filter: blur(0.6px); }
+    .ask[data-lock] { cursor: pointer; user-select: none; -webkit-user-select: none; }
+    .ask[data-lock]:active { transform: scale(0.985); }
+    .ask[data-lock]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .ask.locked .q-text { color: color-mix(in srgb, var(--accent) 70%, white); font-family: "JetBrains Mono", monospace; opacity: 0.5; filter: blur(0.5px); word-break: break-all; }
     .ask .hint {
-      display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; font-family: "JetBrains Mono", monospace;
-      font-size: 0.78rem; color: var(--accent, var(--cyan)); letter-spacing: 0.1em;
+      display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; padding: 10px;
+      border-radius: 10px; background: color-mix(in srgb, var(--accent) 14%, transparent);
+      font-size: 0.85rem; color: var(--accent); font-weight: 700;
     }
     .ask .hint::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px currentColor; animation: pulse 1.4s ease-in-out infinite; }
-    .ask.open { cursor: default; }
     .ask.open .hint { display: none; }
-    .ask.open:hover { transform: none; }
     .ask .scan {
-      position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0;
-      background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent, var(--cyan)) 35%, transparent), transparent);
+      position: absolute; inset: 0; pointer-events: none; opacity: 0;
+      background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent) 40%, transparent), transparent);
       background-size: 100% 40%; background-repeat: no-repeat;
     }
     .ask.decoding .scan { opacity: 1; animation: scan .9s linear; }
     @keyframes scan { from { background-position: 0 -40%; } to { background-position: 0 140%; } }
 
-    /* Hidden until question opens */
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
     .after-open { display: none; }
-    .after-open.show { display: block; animation: rise .6s ease both; }
+    .after-open.show { display: block; animation: rise .5s ease both; }
 
-    /* Branch choice */
-    .choice { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .sub-title { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; color: var(--muted); margin: 18px 0 8px; }
+    .choice { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
     .choice button {
-      font: inherit; color: var(--text); cursor: pointer; padding: 16px; border-radius: 14px;
-      background: rgba(255,255,255,0.03); border: 1px solid var(--line); text-align: left;
-      transition: border-color .2s, background .2s, opacity .2s, transform .2s;
+      font: inherit; color: var(--text); cursor: pointer; min-height: 72px; padding: 12px; border-radius: 14px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--line); text-align: center;
+      transition: border-color .2s, background .2s, opacity .2s;
     }
-    .choice button b { display: block; font-size: 1.1rem; }
-    .choice button small { color: var(--muted); }
-    .choice button:hover { border-color: var(--accent, var(--cyan)); transform: translateY(-2px); }
-    .choice button.on { border-color: var(--accent, var(--cyan)); background: color-mix(in srgb, var(--accent, var(--cyan)) 14%, transparent); box-shadow: var(--glow); }
-    .choice.picked button:not(.on) { opacity: 0.45; }
-    .branch { display: none; margin-bottom: 18px; border-style: solid; border-color: color-mix(in srgb, var(--accent, var(--cyan)) 40%, transparent); }
-    .branch.show { display: block; animation: rise .5s ease both; }
+    .choice button .em { display: block; font-size: 1.5rem; line-height: 1.2; }
+    .choice button b { display: block; font-size: 0.95rem; }
+    .choice button:active { transform: scale(0.97); }
+    .choice button.on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, transparent); box-shadow: var(--glow); }
+    .choice.picked button:not(.on) { opacity: 0.4; }
+    .branch {
+      display: none; padding: 14px; border-radius: 12px; font-size: 0.95rem;
+      border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); background: rgba(255,255,255,0.03);
+    }
+    .branch.show { display: block; animation: rise .4s ease both; }
+    .branch .who { display: block; font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--accent); margin-bottom: 4px; }
+    .branch em { display: block; font-style: normal; color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
 
-    /* Sequential questions */
+    ul.qs { margin: 0; padding: 0; list-style: none; }
+    ul.qs li { position: relative; padding: 12px 14px 12px 34px; margin-bottom: 8px; border-radius: 12px; background: rgba(255,255,255,0.03); font-size: 0.95rem; }
+    ul.qs li::before { content: attr(data-n); position: absolute; left: 12px; top: 12px; font-family: "Orbitron", sans-serif; font-size: 0.75rem; color: var(--accent); }
+    ul.qs li small { color: var(--muted); }
     ul.qs li.hidden-q { display: none; }
-    ul.qs li.new { animation: rise .5s ease both; }
+    ul.qs li.new { animation: rise .4s ease both; }
     .next-q {
-      font: inherit; font-size: 0.88rem; cursor: pointer; color: var(--accent, var(--cyan));
-      background: transparent; border: 1px dashed color-mix(in srgb, var(--accent, var(--cyan)) 50%, transparent);
-      border-radius: 999px; padding: 6px 14px; margin-top: 4px;
+      width: 100%; min-height: 46px; font: inherit; font-size: 0.9rem; cursor: pointer; color: var(--accent);
+      background: transparent; border: 1px dashed color-mix(in srgb, var(--accent) 55%, transparent); border-radius: 12px;
     }
-    .next-q:hover { background: color-mix(in srgb, var(--accent, var(--cyan)) 10%, transparent); }
+    .next-q:active { background: color-mix(in srgb, var(--accent) 12%, transparent); }
 
-    /* Like (surveillance) */
-    .like-box { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 0 0 18px; }
+    .like-box { margin: 0 0 14px; }
     .like {
-      font: inherit; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 16px; border-radius: 999px; color: var(--text);
-      background: rgba(255,79,216,0.08); border: 1px solid rgba(255,79,216,0.4); transition: transform .1s;
+      width: 100%; min-height: 50px; font: inherit; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 14px; color: var(--text);
+      background: rgba(255,79,216,0.1); border: 1px solid rgba(255,79,216,0.45);
     }
-    .like:active { transform: scale(0.94); }
-    .like .heart { color: var(--pink); font-size: 1.1rem; }
+    .like:active { transform: scale(0.97); }
+    .like .heart { color: var(--pink); font-size: 1.2rem; }
     .like.pop .heart { animation: pop .4s ease; }
-    @keyframes pop { 40% { transform: scale(1.6); } }
-    .log {
-      font-family: "JetBrains Mono", monospace; font-size: 0.78rem; color: var(--pink);
-      min-height: 1.4em; flex: 1; min-width: 200px;
-    }
-    .log span { display: block; animation: rise .4s ease both; }
+    @keyframes pop { 40% { transform: scale(1.7); } }
+    .log { font-family: "JetBrains Mono", monospace; font-size: 0.74rem; color: var(--pink); min-height: 1.4em; margin-top: 8px; line-height: 1.5; }
+    .log span { display: block; animation: rise .3s ease both; }
 
-    /* Cursor glow */
-    #glow {
-      position: fixed; width: 360px; height: 360px; left: 0; top: 0; z-index: 0; pointer-events: none; border-radius: 50%;
-      background: radial-gradient(circle, rgba(62,242,255,0.10), transparent 65%);
-      transform: translate(-50%, -50%); opacity: 0; transition: opacity .4s;
+    /* Letter */
+    .capsule {
+      position: relative; padding: 22px 18px; border-radius: 22px; background: var(--panel);
+      border: 1px solid var(--line); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); overflow: hidden;
     }
-    .book.reveal.in { transition: opacity .8s ease, transform .25s ease; }
-
-    /* Letter launch */
-    .orb.launch { animation: launch 1.4s cubic-bezier(.5,0,.3,1) both; }
-    @keyframes launch {
-      0% { transform: scale(0.2); opacity: 0; }
-      40% { transform: scale(1.1); opacity: 1; }
-      60% { transform: scale(1); }
-      100% { transform: scale(1); }
+    .capsule::before {
+      content: ""; position: absolute; width: 360px; height: 360px; right: -160px; top: -180px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,79,216,0.25), transparent 65%); pointer-events: none;
     }
+    .capsule > * { position: relative; }
+    .capsule p.lead { color: var(--muted); margin: 0 0 18px; font-size: 0.92rem; }
+    .field { margin-bottom: 14px; }
+    label.f { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 6px; }
+    input, textarea {
+      width: 100%; font: inherit; font-size: 16px; color: var(--text); background: rgba(5, 6, 20, 0.65);
+      border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; outline: none; min-height: 48px;
+      transition: border-color .2s, box-shadow .2s; -webkit-appearance: none; appearance: none;
+    }
+    input:focus, textarea:focus { border-color: var(--cyan); box-shadow: var(--glow); }
+    input[type="date"] { color-scheme: dark; }
+    textarea { min-height: 220px; resize: vertical; line-height: 1.8; }
+    .prompts {
+      display: flex; gap: 8px; overflow-x: auto; margin: 0 -18px 14px; padding: 0 18px 4px; scrollbar-width: none;
+    }
+    .prompts::-webkit-scrollbar { display: none; }
+    .prompts button {
+      flex: none; font: inherit; font-size: 0.85rem; color: var(--text); background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; cursor: pointer; white-space: nowrap;
+    }
+    .prompts button:active { border-color: var(--violet); background: rgba(164,107,255,0.15); }
+    .count { display: block; text-align: right; color: var(--muted); font-size: 0.75rem; margin-top: 6px; }
+    .actions { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 16px; }
+    .btn {
+      width: 100%; min-height: 52px; font: inherit; font-weight: 700; font-size: 1rem; cursor: pointer; border: 0; border-radius: 14px;
+      color: #05060f; background: linear-gradient(100deg, var(--cyan), var(--violet));
+      box-shadow: 0 0 30px rgba(62,242,255,0.3);
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); box-shadow: none; }
 
-    footer { text-align: center; color: var(--muted); font-size: 0.85rem; margin-top: 80px; }
+    .sealed { display: none; text-align: center; padding: 24px 0 4px; }
+    .sealed.show { display: block; animation: rise .6s ease both; }
+    .orb {
+      width: 120px; height: 120px; margin: 0 auto 20px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff 0%, var(--cyan) 18%, var(--violet) 55%, #1a0b3a 100%);
+      box-shadow: 0 0 60px var(--violet), 0 0 120px rgba(62,242,255,0.4);
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float { 50% { transform: translateY(-10px); } }
+    .orb.launch { animation: launch 1.2s cubic-bezier(.5,0,.3,1) both, float 4s ease-in-out 1.2s infinite; }
+    @keyframes launch { 0% { transform: scale(0.2); opacity: 0; } 45% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
+    .sealed h3 { font-size: 1.3rem; margin: 0 0 6px; }
+    .sealed p { color: var(--muted); margin: 0 0 8px; font-size: 0.92rem; }
+
+    footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 48px; }
     footer .mono { color: var(--cyan); }
 
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+    /* Bottom tab bar */
+    .tabbar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+      padding: 8px 16px calc(8px + var(--safe-b));
+      background: rgba(5, 6, 15, 0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--line);
+    }
+    .tabbar nav { max-width: 480px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .tabbar a {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+      min-height: 48px; border-radius: 12px; text-decoration: none; color: var(--muted); font-size: 0.72rem; font-weight: 500;
+      transition: color .2s, background .2s;
+    }
+    .tabbar a .ic { font-size: 1.15rem; line-height: 1; filter: grayscale(1); opacity: 0.7; transition: filter .2s, opacity .2s; }
+    .tabbar a.on { color: var(--text); background: rgba(62,242,255,0.08); }
+    .tabbar a.on .ic { filter: none; opacity: 1; }
+
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
     .reveal.in { opacity: 1; transform: none; }
 
-    @media (max-width: 720px) {
-      .book { grid-template-columns: 1fr; gap: 24px; padding: 22px 18px; }
-      .cover-wrap { width: 160px; margin: 0 auto; }
-      .row { grid-template-columns: 1fr; }
-      .capsule { padding: 24px 18px; }
-      .count { margin-left: 0; width: 100%; }
-    }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
+      html { scroll-behavior: auto; }
       .reveal { opacity: 1; transform: none; }
     }
   </style>
@@ -329,12 +347,11 @@
 <body>
   <canvas id="stars"></canvas>
   <div class="grid-floor"></div>
-  <div id="glow"></div>
 
   <main>
-    <section class="hero">
+    <section class="hero" id="top">
       <div class="label">// 이번 달의 주제 · OCTOBER</div>
-      <h1>FUTURE<small>미 래</small></h1>
+      <h1>FUTURE<small>미래</small></h1>
       <p class="q"><span class="typed" id="typed"></span></p>
       <p class="desc">
         우리 세상이 어떻게 변하고 달라질지 생각해볼 수 있는 책이라면,
@@ -344,147 +361,152 @@
         <span class="dot"></span>
         <span><b>10월 26일(월)</b>까지 읽은 책과 발제문 전달</span>
       </div>
-      <nav class="timeline">
-        <a href="#b1"><span class="mono">01</span>지구 끝의 온실</a>
-        <a href="#b2"><span class="mono">02</span>나는 4시간만 일한다</a>
-        <a href="#b3"><span class="mono">03</span>정보의 지배</a>
-        <a href="#letter"><span class="mono">04</span>미래의 나에게</a>
-      </nav>
+      <a class="scroll-cue" href="#books"><i></i>발제 보러 가기</a>
     </section>
 
-    <div class="sec-head reveal">
-      <div class="label">// 발제</div>
-      <h2>우리가 읽은 미래</h2>
+    <div class="sec-head reveal" id="books">
+      <div>
+        <div class="label">// 발제</div>
+        <h2>우리가 읽은 미래</h2>
+      </div>
+      <div class="counter"><b id="cur">01</b> / 03</div>
     </div>
 
-    <!-- 01 -->
-    <article class="book reveal" id="b1" style="--accent: #3ef2ff">
-      <div class="idx">01</div>
-      <div class="cover-wrap">
-        <div class="cover">
-          <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791191824001.jpg" alt="지구 끝의 온실 표지" loading="lazy">
-          <div class="fallback"><b>지구 끝의<br>온실</b><i>김초엽</i></div>
-        </div>
-      </div>
-      <div class="book-body">
-        <div class="label">SF · 소설</div>
-        <h3>지구 끝의 온실</h3>
-        <p class="author">김초엽</p>
-
-        <div class="ask" data-lock>
-          <span class="label">Q. 발제</span>
-          <span class="q-text">“내 안전이 돔 밖 누군가의 희생 위에 서 있다는 걸 알게 된다면, 나는 모른 척 안에 남을까, 아니면 지수처럼 위험한 바깥으로 나갈까?”</span>
-        </div>
-
-        <div class="after-open">
-          <p class="sub-title">당신의 선택은?</p>
-          <div class="choice">
-            <button type="button" data-branch="stay"><b>🏠 안에 남는다</b><small>돔 안의 안전</small></button>
-            <button type="button" data-branch="go"><b>🌱 바깥으로 나간다</b><small>지수처럼</small></button>
+    <div class="track reveal" id="track">
+      <!-- 01 -->
+      <article class="book" style="--accent: #3ef2ff">
+        <div class="book-top">
+          <div class="cover">
+            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791191824001.jpg" alt="지구 끝의 온실 표지" loading="lazy">
+            <div class="fallback"><b>지구 끝의<br>온실</b><i>김초엽</i></div>
           </div>
-          <div class="branch" data-for="stay">
-            <span class="who">꼬리 질문 → 남는다</span>
-            “안에 남는다면, 그 안에서 할 수 있는 일은 뭘까?”
-            <em>남되 바꾸는 제3의 선택</em>
+          <div class="book-meta">
+            <div class="idx">01</div>
+            <span class="label">SF · 소설</span>
+            <h3>지구 끝의 온실</h3>
+            <p class="author">김초엽</p>
           </div>
-          <div class="branch" data-for="go">
-            <span class="who">꼬리 질문 → 나간다</span>
-            “어느 순간이 되면 나가야겠다고 결심할 것 같아?”
-            <em>나만의 한계선</em>
+        </div>
+        <div class="book-body">
+          <div class="ask" data-lock>
+            <span class="label">Q. 발제</span>
+            <span class="q-text">“내 안전이 돔 밖 누군가의 희생 위에 서 있다는 걸 알게 된다면, 나는 모른 척 안에 남을까, 아니면 지수처럼 위험한 바깥으로 나갈까?”</span>
           </div>
 
-          <p class="sub-title">경험으로 끌어오는 질문</p>
-          <ul class="qs" data-seq>
-            <li>“편하자고 눈감았던 적, 반대로 손해 보고도 아닌 건 아니라고 했던 적 있어?”</li>
-            <li>“지금 내 삶에서 ‘돔’이라고 느껴지는 건 뭐야?” <small>(직장, 동네, 인간관계 등)</small></li>
-          </ul>
+          <div class="after-open">
+            <p class="sub-title">당신의 선택은?</p>
+            <div class="choice">
+              <button type="button" data-branch="stay"><span class="em">🏠</span><b>안에 남는다</b></button>
+              <button type="button" data-branch="go"><span class="em">🌱</span><b>바깥으로 나간다</b></button>
+            </div>
+            <div class="branch" data-for="stay">
+              <span class="who">꼬리 질문 → 남는다</span>
+              “안에 남는다면, 그 안에서 할 수 있는 일은 뭘까?”
+              <em>남되 바꾸는 제3의 선택</em>
+            </div>
+            <div class="branch" data-for="go">
+              <span class="who">꼬리 질문 → 나간다</span>
+              “어느 순간이 되면 나가야겠다고 결심할 것 같아?”
+              <em>나만의 한계선</em>
+            </div>
+
+            <p class="sub-title">경험으로 끌어오는 질문</p>
+            <ul class="qs" data-seq>
+              <li data-n="01">“편하자고 눈감았던 적, 반대로 손해 보고도 아닌 건 아니라고 했던 적 있어?”</li>
+              <li data-n="02">“지금 내 삶에서 ‘돔’이라고 느껴지는 건 뭐야?” <small>(직장, 동네, 인간관계 등)</small></li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
 
-    <!-- 02 -->
-    <article class="book reveal" id="b2" style="--accent: #ffd34f">
-      <div class="idx">02</div>
-      <div class="cover-wrap">
-        <div class="cover">
-          <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791185584454.jpg" alt="나는 4시간만 일한다 표지" loading="lazy">
-          <div class="fallback"><b>나는<br>4시간만<br>일한다</b><i>팀 페리스</i></div>
+      <!-- 02 -->
+      <article class="book" style="--accent: #ffd34f">
+        <div class="book-top">
+          <div class="cover">
+            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9791185584454.jpg" alt="나는 4시간만 일한다 표지" loading="lazy">
+            <div class="fallback"><b>나는<br>4시간만<br>일한다</b><i>팀 페리스</i></div>
+          </div>
+          <div class="book-meta">
+            <div class="idx">02</div>
+            <span class="label">자기계발 · 일의 미래</span>
+            <h3>나는 4시간만 일한다</h3>
+            <p class="author">팀 페리스</p>
+          </div>
         </div>
-      </div>
-      <div class="book-body">
-        <div class="label">자기계발 · 일의 미래</div>
-        <h3>나는 4시간만 일한다</h3>
-        <p class="author">팀 페리스</p>
-
-        <blockquote>“선택의 권리, 선택할 수 있는 능력이야말로 진정한 힘이다.”</blockquote>
-
-        <div class="ask" data-lock>
-          <span class="label">Q. 발제</span>
-          <span class="q-text">시대의 흐름이 바뀜에 따라 일의 형태도 다양하게 변화하고 있습니다. 제약 없이 원하는 일을 선택할 수 있다면, 지금의 직장이나 직업을 넘어 어떤 일을 하며 살고 싶나요?</span>
+        <div class="book-body">
+          <blockquote>“선택의 권리, 선택할 수 있는 능력이야말로 진정한 힘이다.”</blockquote>
+          <div class="ask" data-lock>
+            <span class="label">Q. 발제</span>
+            <span class="q-text">시대의 흐름이 바뀜에 따라 일의 형태도 다양하게 변화하고 있습니다. 제약 없이 원하는 일을 선택할 수 있다면, 지금의 직장이나 직업을 넘어 어떤 일을 하며 살고 싶나요?</span>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
 
-    <!-- 03 -->
-    <article class="book reveal" id="b3" style="--accent: #ff4fd8">
-      <div class="idx">03</div>
-      <div class="cover-wrap">
-        <div class="cover">
-          <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9788934951445.jpg" alt="정보의 지배 표지" loading="lazy">
-          <div class="fallback"><b>정보의<br>지배</b><i>한병철</i></div>
+      <!-- 03 -->
+      <article class="book" style="--accent: #ff4fd8">
+        <div class="book-top">
+          <div class="cover">
+            <img src="https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9788934951445.jpg" alt="정보의 지배 표지" loading="lazy">
+            <div class="fallback"><b>정보의<br>지배</b><i>한병철</i></div>
+          </div>
+          <div class="book-meta">
+            <div class="idx">03</div>
+            <span class="label">인문 · 디지털 사회</span>
+            <h3>정보의 지배</h3>
+            <p class="author">한병철</p>
+          </div>
         </div>
-      </div>
-      <div class="book-body">
-        <div class="label">인문 · 디지털 사회</div>
-        <h3>정보의 지배</h3>
-        <p class="author">한병철</p>
+        <div class="book-body">
+          <blockquote class="fold">
+            “우리는 자유롭다고 착각하지만, 우리의 삶은 심리정치적 행동 조종을 위해 모조리 기록된다.
+            신자유주의 정보체제에서는 늘 감시당한다는 의식이 아니라 자유롭다는 느낌이 권력의 작동을 보증한다.
+            빅브라더의 건드릴 수 없는 텔레스크린과 달리, 스마트 터치스크린은 모든 것을 처분 가능하고 소비 가능하게 만든다.
+            그렇게 스마트 터치스크린은 ‘손가락 끝 자유’라는 환상을 만들어 낸다.
+            정보체제에서 자유롭기는 행위하기가 아니라 클릭하기, 좋아요 누르기, 게시물 올리기를 뜻한다.
+            따라서 정보체제는 거의 저항에 직면하지 않는다.”
+          </blockquote>
 
-        <blockquote>
-          “우리는 자유롭다고 착각하지만, 우리의 삶은 심리정치적 행동 조종을 위해 모조리 기록된다.
-          신자유주의 정보체제에서는 늘 감시당한다는 의식이 아니라 자유롭다는 느낌이 권력의 작동을 보증한다.
-          빅브라더의 건드릴 수 없는 텔레스크린과 달리, 스마트 터치스크린은 모든 것을 처분 가능하고 소비 가능하게 만든다.
-          그렇게 스마트 터치스크린은 ‘손가락 끝 자유’라는 환상을 만들어 낸다.
-          정보체제에서 자유롭기는 행위하기가 아니라 클릭하기, 좋아요 누르기, 게시물 올리기를 뜻한다.
-          따라서 정보체제는 거의 저항에 직면하지 않는다.”
-        </blockquote>
-        <div class="like-box">
-          <button class="like" type="button" id="like"><span class="heart">♥</span> 좋아요 <span class="mono" id="likeN">0</span></button>
-          <div class="log" id="log"></div>
+          <div class="like-box">
+            <button class="like" type="button" id="like"><span class="heart">♥</span> 좋아요 <span class="mono" id="likeN">0</span></button>
+            <div class="log" id="log"></div>
+          </div>
+
+          <div class="ask" data-lock>
+            <span class="label">Q1. 발제</span>
+            <span class="q-text">디지털 세계에서 우리는 정말 자유롭나요?</span>
+          </div>
+
+          <blockquote class="fold">
+            “오늘날 담론적 합리성을 위협하는 또 하나의 요인은 흥분 소통이다.
+            우리는 신속하게 잇따르는 정보들이 우리 자신을 흥분시키는 것을 과도하게 허용한다.
+            흥분은 합리성보다 빠르다. 흥분 소통에서는 더 나은 논증이 아니라 더 큰 흥분을 유발할 수 있는 정보가 관철된다.”
+          </blockquote>
         </div>
-
-        <div class="ask" data-lock>
-          <span class="label">Q1. 발제</span>
-          <span class="q-text">디지털 세계에서 우리는 정말 자유롭나요?</span>
-        </div>
-
-        <blockquote>
-          “오늘날 담론적 합리성을 위협하는 또 하나의 요인은 흥분 소통이다.
-          우리는 신속하게 잇따르는 정보들이 우리 자신을 흥분시키는 것을 과도하게 허용한다.
-          흥분은 합리성보다 빠르다. 흥분 소통에서는 더 나은 논증이 아니라 더 큰 흥분을 유발할 수 있는 정보가 관철된다.”
-        </blockquote>
-      </div>
-    </article>
+      </article>
+    </div>
+    <div class="dots" id="dots" role="tablist" aria-label="책 선택"></div>
+    <p class="swipe-hint">← 옆으로 넘겨서 다른 책 보기 →</p>
 
     <!-- Letter -->
     <div class="sec-head reveal" id="letter">
-      <div class="label">// 마무리 · TIME CAPSULE</div>
-      <h2>미래의 나에게 편지 쓰기</h2>
+      <div>
+        <div class="label">// 마무리 · TIME CAPSULE</div>
+        <h2>미래의 나에게<br>편지 쓰기</h2>
+      </div>
     </div>
 
     <section class="capsule reveal">
       <div id="writeView">
-        <p class="lead">오늘 나눈 이야기를 떠올리며, 몇 년 뒤의 나에게 한 통의 편지를 남겨요. 쓴 편지는 이 기기에만 저장되고, 파일로 내려받을 수 있어요.</p>
-        <div class="row">
-          <div>
-            <label class="f" for="from">보내는 사람</label>
-            <input id="from" type="text" placeholder="지금의 나 (이름)">
-          </div>
-          <div>
-            <label class="f" for="openAt">열어볼 날</label>
-            <input id="openAt" type="date">
-          </div>
+        <p class="lead">오늘 나눈 이야기를 떠올리며, 몇 년 뒤의 나에게 편지를 남겨요. 편지는 이 기기에만 저장되고, 파일로 내려받을 수 있어요.</p>
+        <div class="field">
+          <label class="f" for="from">보내는 사람</label>
+          <input id="from" type="text" placeholder="지금의 나 (이름)" autocomplete="name">
         </div>
-        <label class="f">막막하다면 한 줄 시작해 보기</label>
+        <div class="field">
+          <label class="f" for="openAt">열어볼 날</label>
+          <input id="openAt" type="date">
+        </div>
+        <label class="f">막막하다면 한 줄 시작해 보기 →</label>
         <div class="prompts">
           <button type="button">오늘 모임에서 가장 마음에 남은 말은</button>
           <button type="button">지금 나에게 ‘돔’은</button>
@@ -493,10 +515,10 @@
         </div>
         <label class="f" for="body">편지</label>
         <textarea id="body" placeholder="안녕, 미래의 나. 지금 나는…"></textarea>
+        <span class="count mono" id="count">0자</span>
         <div class="actions">
           <button class="btn" id="seal" type="button">타임캡슐 봉인하기</button>
           <button class="btn ghost" id="download" type="button">파일로 저장</button>
-          <span class="count mono" id="count">0자</span>
         </div>
       </div>
 
@@ -517,12 +539,23 @@
     </footer>
   </main>
 
+  <div class="tabbar">
+    <nav>
+      <a href="#top" data-sec="top" class="on"><span class="ic">🪐</span>주제</a>
+      <a href="#books" data-sec="books"><span class="ic">📖</span>발제</a>
+      <a href="#letter" data-sec="letter"><span class="ic">✉️</span>편지</a>
+    </nav>
+  </div>
+
   <script>
+    const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const buzz = ms => { try { navigator.vibrate && navigator.vibrate(ms); } catch {} };
+
     // Typing headline
     (function () {
       const text = "앞으로의 세상과 나는 어떻게 될까요?";
       const el = document.getElementById("typed");
-      if (matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = text; return; }
+      if (REDUCED) { el.textContent = text; return; }
       let i = 0;
       (function tick() {
         el.textContent = text.slice(0, ++i);
@@ -542,51 +575,87 @@
       const c = document.getElementById("stars");
       const ctx = c.getContext("2d");
       let w, h, stars;
-      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       function resize() {
-        w = c.width = innerWidth * devicePixelRatio;
-        h = c.height = innerHeight * devicePixelRatio;
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        w = c.width = innerWidth * dpr;
+        h = c.height = innerHeight * dpr;
         c.style.width = innerWidth + "px"; c.style.height = innerHeight + "px";
-        const n = Math.min(260, Math.floor(innerWidth * innerHeight / 5000));
+        const n = Math.min(180, Math.floor(innerWidth * innerHeight / 4000));
         stars = Array.from({ length: n }, () => ({
           x: Math.random() * w, y: Math.random() * h,
-          z: Math.random() * 0.8 + 0.2, t: Math.random() * Math.PI * 2
+          z: Math.random() * 0.8 + 0.2, t: Math.random() * Math.PI * 2, dpr
         }));
       }
       function draw() {
         ctx.clearRect(0, 0, w, h);
         for (const s of stars) {
           s.t += 0.02;
-          s.y -= s.z * 0.25 * devicePixelRatio;
+          s.y -= s.z * 0.25 * s.dpr;
           if (s.y < 0) { s.y = h; s.x = Math.random() * w; }
-          const a = 0.35 + Math.sin(s.t) * 0.3 * s.z;
-          ctx.fillStyle = `rgba(200, 220, 255, ${a})`;
+          ctx.fillStyle = `rgba(200, 220, 255, ${0.35 + Math.sin(s.t) * 0.3 * s.z})`;
           ctx.beginPath();
-          ctx.arc(s.x, s.y, s.z * 1.3 * devicePixelRatio, 0, Math.PI * 2);
+          ctx.arc(s.x, s.y, s.z * 1.2 * s.dpr, 0, Math.PI * 2);
           ctx.fill();
         }
-        if (!reduced) requestAnimationFrame(draw);
+        if (!REDUCED) requestAnimationFrame(draw);
       }
-      addEventListener("resize", resize);
+      let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(resize, 150); });
       resize(); draw();
     })();
 
     // Reveal on scroll
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.08 });
     document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 
-    const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Carousel: dots + counter
+    (function () {
+      const track = document.getElementById("track");
+      const cards = [...track.querySelectorAll(".book")];
+      const dots = document.getElementById("dots");
+      const cur = document.getElementById("cur");
+      cards.forEach((card, i) => {
+        const b = document.createElement("button");
+        b.type = "button"; b.setAttribute("aria-label", `${i + 1}번째 책`);
+        b.addEventListener("click", () => track.scrollTo({ left: card.offsetLeft - 16, behavior: REDUCED ? "auto" : "smooth" }));
+        dots.appendChild(b);
+      });
+      let last = -1;
+      function update() {
+        const i = Math.round(track.scrollLeft / (cards[0].offsetWidth + 12));
+        const idx = Math.max(0, Math.min(cards.length - 1, i));
+        if (idx === last) return;
+        last = idx;
+        cur.textContent = String(idx + 1).padStart(2, "0");
+        [...dots.children].forEach((d, j) => d.classList.toggle("on", j === idx));
+        if (idx > 0) buzz(8);
+      }
+      track.addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
+      update();
+    })();
+
+    // Fold long quotes
+    document.querySelectorAll("blockquote.fold").forEach(q => {
+      if (q.scrollHeight <= q.clientHeight + 4) { q.classList.remove("fold"); return; }
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "more"; b.textContent = "인용 전체 보기 ↓";
+      q.after(b);
+      b.addEventListener("click", () => {
+        const open = q.classList.toggle("unfold");
+        b.textContent = open ? "접기 ↑" : "인용 전체 보기 ↓";
+      });
+    });
 
     // Locked questions: tap to decode
     (function () {
       const GLYPHS = "▓▒░█<>/\\|=+*#@$%01ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ";
+      const g = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
 
       document.querySelectorAll(".ask[data-lock]").forEach(ask => {
         const q = ask.querySelector(".q-text");
         const real = q.textContent.trim();
-        const scramble = () => real.replace(/\S/g, () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)]);
+        const scramble = () => real.replace(/\S/g, g);
         q.textContent = scramble();
         ask.classList.add("locked");
         ask.setAttribute("role", "button");
@@ -594,17 +663,18 @@
         ask.setAttribute("aria-label", "발제 질문 열기");
         const hint = document.createElement("span");
         hint.className = "hint";
-        hint.textContent = "TAP TO DECODE · 탭해서 발제 열기";
+        hint.textContent = "탭해서 발제 열기";
         ask.appendChild(hint);
         const scan = document.createElement("span");
         scan.className = "scan";
         ask.appendChild(scan);
 
-        let idle = setInterval(() => { if (ask.classList.contains("locked")) q.textContent = scramble(); }, 900);
+        const idle = setInterval(() => { if (ask.classList.contains("locked")) q.textContent = scramble(); }, 900);
 
         function open() {
           if (!ask.classList.contains("locked")) return;
           clearInterval(idle);
+          buzz(20);
           ask.classList.remove("locked");
           ask.classList.add("decoding");
           ask.removeAttribute("role"); ask.removeAttribute("tabindex"); ask.removeAttribute("aria-label");
@@ -620,7 +690,7 @@
           (function frame(now) {
             const p = Math.min(1, (now - start) / total);
             const n = Math.floor(real.length * p);
-            q.textContent = real.slice(0, n) + real.slice(n).replace(/\S/g, () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)]);
+            q.textContent = real.slice(0, n) + real.slice(n).replace(/\S/g, g);
             p < 1 ? requestAnimationFrame(frame) : finish();
           })(start);
         }
@@ -633,6 +703,7 @@
     document.querySelectorAll(".choice").forEach(choice => {
       const scope = choice.parentElement;
       choice.querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
+        buzz(12);
         choice.classList.add("picked");
         choice.querySelectorAll("button").forEach(b => b.classList.toggle("on", b === btn));
         scope.querySelectorAll(".branch").forEach(br => br.classList.toggle("show", br.dataset.for === btn.dataset.branch));
@@ -648,6 +719,7 @@
       btn.type = "button"; btn.className = "next-q"; btn.textContent = "+ 다음 질문 열기";
       ul.after(btn);
       btn.addEventListener("click", () => {
+        buzz(10);
         const next = ul.querySelector(".hidden-q");
         if (next) { next.classList.remove("hidden-q"); next.classList.add("new"); }
         if (!ul.querySelector(".hidden-q")) btn.remove();
@@ -657,7 +729,6 @@
     // Like = surveillance log
     (function () {
       const btn = document.getElementById("like"), nEl = document.getElementById("likeN"), log = document.getElementById("log");
-      if (!btn) return;
       const lines = [
         "방금 그 클릭도 기록되었습니다.",
         "관심사 프로필이 업데이트되었습니다.",
@@ -668,32 +739,27 @@
       ];
       let n = 0;
       btn.addEventListener("click", () => {
-        n++; nEl.textContent = n;
+        n++; nEl.textContent = n; buzz(15);
         btn.classList.remove("pop"); void btn.offsetWidth; btn.classList.add("pop");
-        const t = new Date().toTimeString().slice(0, 8);
-        log.innerHTML = "";
         const s = document.createElement("span");
-        s.textContent = `[${t}] ${lines[(n - 1) % lines.length]}`;
-        log.appendChild(s);
+        s.textContent = `[${new Date().toTimeString().slice(0, 8)}] ${lines[(n - 1) % lines.length]}`;
+        log.replaceChildren(s);
       });
     })();
 
-    // Card tilt + cursor glow
-    if (!REDUCED && matchMedia("(hover: hover)").matches) {
-      const glow = document.getElementById("glow");
-      addEventListener("pointermove", e => {
-        glow.style.opacity = 1;
-        glow.style.left = e.clientX + "px"; glow.style.top = e.clientY + "px";
-      });
-      document.querySelectorAll(".book").forEach(card => {
-        card.addEventListener("pointermove", e => {
-          const r = card.getBoundingClientRect();
-          const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-          card.style.transform = `perspective(1200px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
-        });
-        card.addEventListener("pointerleave", () => { card.style.transform = ""; });
-      });
-    }
+    // Tab bar active state
+    (function () {
+      const tabs = [...document.querySelectorAll(".tabbar a")];
+      const secs = tabs.map(t => document.getElementById(t.dataset.sec));
+      function update() {
+        const y = innerHeight * 0.4;
+        let active = 0;
+        secs.forEach((s, i) => { if (s.getBoundingClientRect().top <= y) active = i; });
+        tabs.forEach((t, i) => t.classList.toggle("on", i === active));
+      }
+      addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
+      update();
+    })();
 
     // Letter
     (function () {
@@ -756,10 +822,10 @@ ${body.value}
 
       $("seal").addEventListener("click", () => {
         if (!body.value.trim()) { body.focus(); body.placeholder = "한 줄이라도 적어 주세요 :)"; return; }
-        save({ sealed: true }); showSealed();
+        save({ sealed: true }); showSealed(); buzz([30, 60, 30]);
         const orb = document.querySelector(".orb");
         orb.classList.remove("launch"); void orb.offsetWidth; orb.classList.add("launch");
-        $("sealedView").scrollIntoView({ behavior: "smooth", block: "center" });
+        $("letter").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "start" });
       });
       $("download").addEventListener("click", download);
       $("download2").addEventListener("click", download);
